@@ -21,52 +21,134 @@ let currentOperation = [];
 
 function addNumberToArrayOperation () {     
     document.getElementById("show_current_operation").innerHTML = currentOperation.join('');
-    console.log(currentOperation.join(''));
-}
-
-function getFinalResult () {
-    let getArrayString = currentOperation.join('').toString();
-    let getAddBlocs = getArrayString.split('+');
-    let sumResult = parseFloat(getAddBlocs[0]) + parseFloat(getAddBlocs[1]) ;
-
-    for (let index = 0; index <= getAddBlocs.length; index++) {
-        const element = getAddBlocs[index];
-        parseFloat(element)
-    }
-
-    console.log('new array:'+ getAddBlocs);
-    console.log('1 array:'+ getAddBlocs[0]);
-    console.log('2 array:'+ getAddBlocs[1]);
-    console.log('resut is:'+ sumResult);
 }
 
 btnGetResult.addEventListener("click", ()=> {
     getFinalResult ()
+});
+
+btnDelete.addEventListener("click", ()=> {
+    currentOperation = ['']
+    document.getElementById("show_current_operation").innerHTML = '';
+});
+
+function getFinalResult () {
+    let getArrayString = currentOperation.join('').toString();
+    let getArrayBlocs = getArrayString.split(' ')
+    getArrayBlocs.map(s => Array.from(s));
+    console.log(getArrayBlocs);
+
+            getArrayBlocs.forEach(multElements);
+            getArrayBlocs.forEach(divElements);
+            getArrayBlocs.forEach(addElements);
+            getArrayBlocs.forEach(sustElements);
+            document.getElementById("show_current_operation").innerHTML = getArrayBlocs.join('');
+}
+
+function multElements (item, index, getArrayBlocs){
+    
+    let a = item
+    let b = index
+    if (a == 'x'){
+        console.log("[x] -> Index " + b );
+        let n1 = b - 1; 
+        let n2 = b + 1;
+        let c = parseInt(getArrayBlocs[n1])
+        let d = parseInt(getArrayBlocs[n2])  
+        let multiplication = c*d;
+        console.log(c + " x " + d)
+        console.log("------")
+        console.log("result = " + multiplication)
+        getArrayBlocs.splice( n1, 3, multiplication);
+        divElements (item, index, getArrayBlocs);
+        console.log('_________________________')
+        console.log(getArrayBlocs)
+    } 
+}
+
+function divElements (item, index, getArrayBlocs){
+    let a = item
+    let b = index
+    if (a == '/'){
+        console.log("position of '/': " + b);
+        let n1 = b - 1; 
+        let n2 = b + 1;
+        let c = parseInt(getArrayBlocs[n1])
+        let d = parseInt(getArrayBlocs[n2])  
+        let division = c/d;
+        console.log(c + " / " + d)
+        console.log("------")
+        console.log("result = " + division)
+        getArrayBlocs.splice( n1, 3, division);
+        addElements (getArrayBlocs);
+        console.log('_________________________')
+        console.log(getArrayBlocs)
+    } 
+} 
+
+function addElements (item, index, getArrayBlocs){
+    let a = item
+    let b = index
+    if (a == '+'){
+        console.log("position of '+': " + b);
+        let n1 = b - 1; 
+        let n2 = b + 1;
+        let c = parseInt(getArrayBlocs[n1])
+        let d = parseInt(getArrayBlocs[n2])  
+        let addition = c+d;
+        console.log(c + " + " + d)
+        console.log("------")
+        console.log("result = " + addition)
+        getArrayBlocs.splice( n1, 3, addition);
+        sustElements (getArrayBlocs);
+        console.log('_________________________')
+        console.log(getArrayBlocs)
+    } 
+} 
+
+function sustElements (item, index, getArrayBlocs){
+    let a = item
+    let b = index
+    if (a == '-'){
+        console.log("position of '-': " + b);
+        let n1 = b - 1; 
+        let n2 = b + 1;
+        let c = parseInt(getArrayBlocs[n1])
+        let d = parseInt(getArrayBlocs[n2])  
+        let sustraction = c-d;
+        console.log(c + " - " + d)
+        console.log("------")
+        console.log("result = " + sustraction)
+        getArrayBlocs.splice( n1, 3, sustraction);
+        console.log('_________________________')
+        console.log(getArrayBlocs)
+    } 
+} 
+
+
+btnMultiply.addEventListener("click", ()=>{
+    currentOperation.push(" x ");
+    addNumberToArrayOperation (); 
+    separateArray () 
 })
 
-
+btnDivide.addEventListener("click", ()=>{
+    currentOperation.push(" / ");
+    addNumberToArrayOperation (); 
+    separateArray () 
+})  
 
 btnAdd.addEventListener("click", ()=>{
-    currentOperation.push("+");
+    currentOperation.push(" + ");
     addNumberToArrayOperation ();     
     separateArray ()                 
 })
-/* btnSustract.addEventListener("click", ()=>{
-    currentOperation.push("-");
-    addNumberToArrayOperation (); 
-    separateArray () 
-})
-btnMultiply.addEventListener("click", ()=>{
-    currentOperation.push("x");
-    addNumberToArrayOperation (); 
-    separateArray () 
-})
-btnDivide.addEventListener("click", ()=>{
-    currentOperation.push("/");
-    addNumberToArrayOperation (); 
-    separateArray () 
-})  */
 
+btnSustract.addEventListener("click", ()=>{
+    currentOperation.push(" - ");
+    addNumberToArrayOperation (); 
+    separateArray () 
+})
 
 btnN1.addEventListener("click", ()=> {
     currentOperation.push(1);
